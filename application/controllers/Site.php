@@ -12,15 +12,21 @@ class Site extends CI_Controller {
 		if ( ! empty($_FILES))
 		{
 			$config['upload_path'] = "./assets/uploads";
-			$config['allowed_types'] = 'gif|jpg|png|mp4|ogv';
+			$config['allowed_types'] = 'gif|jpg|png|mp4|ogv|zip';
 
 			$this->load->library('upload', $config);
 			if (! $this->upload->do_upload("file")) {
 				echo "File cannot be uploaded";
 			}
 		}
-
-		$this->listFiles();
+		elseif ($this->input->post('file_to_remove')) 
+		{
+			$file_to_remove = $this->input->post('file_to_remove');
+			unlink("./assets/uploads/" . $file_to_remove);	
+		}
+		else {
+			$this->listFiles();
+		}
 	}
 
 	private function listFiles()
