@@ -1,18 +1,23 @@
 $(function () {
-	var inputFile = $('input[name=file]');
+	var inputFile = $('input#file');
 	var uploadURI = $('#form-upload').attr('action');
 	var progressBar = $('#progress-bar');
 
 	listFilesOnServer();
 
 	$('#upload-btn').on('click', function(event) {
-		var fileToUpload = inputFile[0].files[0];
-		// make sure there is file to upload
-		if (fileToUpload != 'undefined') {
+		var filesToUpload = inputFile[0].files;
+		// make sure there is file(s) to upload
+		if (filesToUpload.length > 0) {
 			// provide the form data
 			// that would be sent to sever through ajax
 			var formData = new FormData();
-			formData.append("file", fileToUpload);
+
+			for (var i = 0; i < filesToUpload.length; i++) {
+				var file = filesToUpload[i];
+
+				formData.append("file[]", file, file.name);				
+			}
 
 			// now upload the file using $.ajax
 			$.ajax({
