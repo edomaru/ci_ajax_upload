@@ -67,7 +67,9 @@ $(function () {
 
 		$.getJSON(uploadURI, function(data) {
 			$.each(data, function(index, element) {
-				items.push('<li class="list-group-item">' + element  + '<div class="pull-right"><a href="#" data-file="' + element + '" class="remove-file"><i class="glyphicon glyphicon-remove"></i></a></div></li>');
+				var imagePath = "../assets/uploads/" + element;
+
+				items.push('<li class="list-group-item"><a target="_blank" href="' + imagePath + '">' + element  + '</a><div class="pull-right"><a href="#" data-file="' + element + '" class="remove-file"><i class="glyphicon glyphicon-remove"></i></a></div></li>');
 			});
 			$('.list-group').html("").html(items.join(""));
 		});
